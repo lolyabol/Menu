@@ -1,0 +1,14 @@
+{
+  "development": {
+    "storage": "./edalnja.db",
+    "dialect": "sqlite"
+  },
+  "test": {
+    "storage": "./edalnja.db",
+    "dialect": "sqlite"
+  },
+  "production": {
+    "storage": "./edalnja.db",
+    "dialect": "sqlite"
+  }
+}
