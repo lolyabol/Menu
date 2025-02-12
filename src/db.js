@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 //src/db.js
 import { Sequelize } from 'sequelize';
 
 const sequelizeDB = new Sequelize({
     dialect: 'sqlite',
     storage: 'database.db', 
+=======
+
+import { Sequelize } from 'sequelize';
+
+const sequelizeDB = new Sequelize('database_name', 'username', 'password', {
+    host: 'localhost',
+    dialect: 'mysql',
+>>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f
 });
 
 async function testConnection() {
@@ -18,4 +27,7 @@ async function testConnection() {
 testConnection();
 
 export default sequelizeDB;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f

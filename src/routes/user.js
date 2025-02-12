@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 //src/routes/user.js
+=======
+>>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f
 import { DataTypes } from 'sequelize';
 import sequelize from '../db.js';
 

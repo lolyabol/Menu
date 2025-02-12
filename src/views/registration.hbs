@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 <!-- src/views/registration.hbs !-->
+=======
+>>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -103,8 +106,13 @@
     <div class="registration-form">
         <h2>Регистрация</h2>
         <form id="registrationForm" action="/registration" method="POST">
+<<<<<<< HEAD
             <label for="login">Имя пользователя:</label>
             <input type="text" id="login" name="login" required>
+=======
+            <label for="username">Имя пользователя:</label>
+            <input type="text" id="username" name="username" required>
+>>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f
             
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
@@ -124,11 +132,19 @@
             document.getElementById('registrationForm').addEventListener('submit', function(event) {
                 event.preventDefault();
 
+<<<<<<< HEAD
                 let login = event.target.elements.login.value.trim();
                 let email = event.target.elements.email.value.trim();
                 let password = event.target.elements.password.value.trim();
 
                 if (!login || !email || !password) {
+=======
+                let username = event.target.elements.username.value.trim();
+                let email = event.target.elements.email.value.trim();
+                let password = event.target.elements.password.value.trim();
+
+                if (!username || !email || !password) {
+>>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f
                     showMessage('Пожалуйста, заполните все поля.', false);
                     return; 
                 }
@@ -138,7 +154,11 @@
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
+<<<<<<< HEAD
                     body: login=${encodeURIComponent(login)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}
+=======
+                    body: username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}
+>>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f
                 })
                 .then(response => response.json())
                 .then(data => {

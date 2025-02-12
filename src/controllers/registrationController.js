@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 //src/controllers/registrationController.js
+=======
+>>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f
 export const registerUser = async (req, res) => {
     const { username, password } = req.body; 
 

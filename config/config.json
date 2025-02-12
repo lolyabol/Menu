@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 {
   "development": {
@@ -14,3 +15,19 @@
   }
 }
 
+=======
+{
+  "development": {
+    "storage": "./edalnja.db",
+    "dialect": "sqlite"
+  },
+  "test": {
+    "storage": "./edalnja.db",
+    "dialect": "sqlite"
+  },
+  "production": {
+    "storage": "./edalnja.db",
+    "dialect": "sqlite"
+  }
+}
+>>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f

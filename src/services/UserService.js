@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 //src/services/UserService.js
+=======
+>>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f
 import UsersModels from "../models/UsersModels.js";
 
 class UserServices {
