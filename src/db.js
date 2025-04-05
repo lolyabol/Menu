@@ -1,33 +1,15 @@
-<<<<<<< HEAD
-//src/db.js
-import { Sequelize } from 'sequelize';
+import { connect } from 'mongoose';
 
-const sequelizeDB = new Sequelize({
-    dialect: 'sqlite',
-    storage: 'database.db', 
-=======
-
-import { Sequelize } from 'sequelize';
-
-const sequelizeDB = new Sequelize('database_name', 'username', 'password', {
-    host: 'localhost',
-    dialect: 'mysql',
->>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f
-});
-
-async function testConnection() {
+const connectDB = async () => {
     try {
-        await sequelizeDB.authenticate();
-        console.log('Соединение с базой данных успешно установлено.');
+        await connect('mongodb+srv://vturilasy:1f3t48y2@menuprojectdb.r1ilxoz.mongodb.net/?retryWrites=true&w=majority&appName=MenuProjectDB', {
+
+        });
+        console.log('MongoDB подключен');
     } catch (error) {
-        console.error('Не удалось подключиться к базе данных:', error);
+        console.error('Ошибка подключения к MongoDB:', error);
+        process.exit(1);
     }
-}
+};
 
-testConnection();
-
-export default sequelizeDB;
-<<<<<<< HEAD
-
-=======
->>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f
+export default connectDB;

@@ -1,109 +1,88 @@
-<<<<<<< HEAD
-//app.js
-=======
->>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f
 import express from 'express';
-import bodyParser from 'body-parser';
-import User from './src/models/UsersModels.js';
-import sequelize from './src/db.js';
-<<<<<<< HEAD
-import registrationRoutes from './src/routes/registrationRoutes.js';
-import hbs from 'hbs';  
+import session from 'express-session';
+import User from './src/models/User.js';
+import Dish from './src/models/Dish.js'; 
+import { engine } from 'express-handlebars';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import loginRoutes from './src/routes/loginRoutes.js';
+import registration from './src/controllers/registrationController.js';
+import loginRouter from './src/routes/loginRouter.js';
+import mainRouter from './src/routes/mainRouter.js';
+import calorieRouter from './src/routes/calorieRouter.js';
+import crypto from 'crypto';
+import Ingredient from './src/models/Ingredient.js';
+import connectDB from './src/db.js'; 
+import registrationRouter from './src/routes/registrationRouter.js';
+import ingredientRoutes from './src/routes/ingredientRoutes.js';
+import userMenuRouter from './src/routes/userMenuRouter.js'
+import dishRoutes from './src/routes/dishRoutes.js';
+import { isAuthenticated } from './src/middleware/authMiddleware.js'; 
+
+const app = express(); 
+const PORT = process.env.PORT || 3000;
+
+const secret = crypto.randomBytes(64).toString('hex'); 
+console.log(secret);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-=======
-import bcrypt from 'bcrypt';
->>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+app.engine('hbs', engine({
+    extname: '.hbs',
+    defaultLayout: 'main',
+    layoutsDir: join(__dirname, 'src/views/layouts/'),
+    partialsDir: join(__dirname, 'src/views/'),
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+    }
+}));
 
-<<<<<<< HEAD
-app.set('views', './src/views');
 app.set('view engine', 'hbs');
+app.set('views', join(__dirname, 'src/views'));
+app.use(express.static(join(__dirname, 'public'))); 
 
-hbs.registerPartials(__dirname + '/routes'); 
+app.use(express.urlencoded({ extended: true })); 
+app.use(express.json()); 
 
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use('/', registrationRoutes);
-app.use('/', loginRoutes);
+app.use(session({
+    secret: secret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false } 
+}));
 
 app.use((req, res, next) => {
-    console.log(`${req.method} ${req.url}`);
+    console.log(`${req.method} ${req.url}`); 
     next();
 });
 
-app.post('/registration', (req, res) => {
+const { RegistrationPage } = registration; 
+app.get('/', RegistrationPage);
+app.use('/registration', registrationRouter);
+app.use('/login', loginRouter);
+app.use('/main', mainRouter);
+app.use('/', isAuthenticated, calorieRouter)
+app.use('/ingredients', ingredientRoutes);
+app.use('/dishes', dishRoutes); 
+app.use('/menu', isAuthenticated, userMenuRouter)
 
-});
-
-app.post('/login', (req, res) => {
-
-});
-
-
-const startServer = async () => {
-    try {
-        await sequelize.authenticate();
-        console.log('Подключение к SQLite успешно!');
-
-        await User.sync();
-=======
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.post('/registration', async (req, res) => {
-    const { login, email, password } = req.body;
-
-    try {
-
-        const existingUser = await User.findOne({
-            where: {
-                [Op.or]: [{ login }, { email }],
-            },
-        });
-
-        if (existingUser) {
-            return res.status(400).send('Пользователь с таким логином или email уже существует.');
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const user = await User.create({
-            login,
-            email,
-            password: hashedPassword,
-        });
-
-        res.status(201).send('Пользователь успешно зарегистрирован!');
-    } catch (error) {
-        console.error('Ошибка при регистрации:', error);
-        res.status(500).send('Ошибка при регистрации. Попробуйте еще раз.');
-    }
+app.use((req, res) => {
+    res.status(404).send('Страница не найдена');
 });
 
 const startServer = async () => {
-    try {
-        await sequelize.authenticate();
-        console.log('Подключение к MySQL успешно!');
-        
-        await User.sync(); 
->>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f
+    await connectDB(); 
 
-        app.listen(PORT, () => {
-            console.log(`Сервер запущен на http://localhost:${PORT}`);
-        });
-    } catch (error) {
-        console.error('Не удалось подключиться к базе данных:', error);
-    }
+    await User.syncIndexes();
+    await Dish.syncIndexes(); 
+    await Ingredient.syncIndexes();
+
+    app.listen(PORT, () => {
+        console.log(`Сервер запущен на http://localhost:${PORT}`);
+    });
 };
 
 startServer();
-<<<<<<< HEAD
 
-=======
->>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f
+export default app;

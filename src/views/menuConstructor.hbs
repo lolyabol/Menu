@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конструктор меню</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/menuConstructorStyle.css">
+</head>
+<body>
+   <div id="app">
+       <h1>Конструктор меню</h1>
+
+       <div id="ingredients-container">
+           {{#each ingredients}}
+               <div class="ingredient-card" onclick="toggleIngredient(this)">
+                   <label>{{this.name}}</label>
+                   <p>Калории: {{this.calories}}</p>
+                   <img src="{{this.imageURL}}" alt="{{this.name}}" />
+                   <input type="checkbox" onchange="toggleSelection(this)" value="{{this._id}}" style="display:none;">
+               </div>
+           {{/each}}
+       </div>
+
+       <label for="meal-type">Выберите тип блюда:</label>
+       <select id="meal-type">
+           <option value="">Все</option>
+           <option value="breakfast">breakfast</option>
+           <option value="lunch">lunch</option>
+           <option value="dinner">dinner</option>
+       </select>
+
+       <button id="fetch-dishes">Показать блюда</button>
+
+       <div id="dishes-container"></div>
+   </div>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+   <script src="/scripts/menuConstructorScript.js"></script>
+</body>
+</html>

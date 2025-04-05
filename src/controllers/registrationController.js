@@ -1,16 +1,21 @@
-<<<<<<< HEAD
-//src/controllers/registrationController.js
-=======
->>>>>>> 54fe37f57f112ca125845b2dee8ae9855630670f
-export const registerUser = async (req, res) => {
-    const { username, password } = req.body; 
+import { registerUser } from '../services/registrationService.js';
+
+function RegistrationPage(req, res) {
+    res.render('registration'); 
+}
+
+const registrationController = async (req, res) => {
+    const { username, email, password } = req.body;
 
     try {
-
-
-        res.status(201).json({ message: 'Пользователь успешно зарегистрирован.' });
+        const message = await registerUser(username, email, password);
+        res.render('login', { message }); 
     } catch (error) {
-        console.error('Ошибка регистрации:', error);
-        res.status(500).json({ message: 'Ошибка при регистрации пользователя.' });
+        res.render('registration', { error: error.message });
     }
+};
+
+export default {
+    RegistrationPage,
+    registrationController
 };
